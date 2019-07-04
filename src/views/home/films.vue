@@ -85,7 +85,7 @@ export default {
         }
     },
 
-    // 在这个组件刚创建出来的时候就发请求v
+    // 在这个组件刚创建出来的时候就发请求v  $router
     created() {
         this.getBannerList()
     // 由于使用了 van-list 默认它的 @load 事件会触发一次

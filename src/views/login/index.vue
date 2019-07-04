@@ -14,6 +14,7 @@
                 <button
                     class="submit login-btn"
                     :disabled="!username || !password"
+                    @click="handleLogin({username, password})"
                 >
                     <span>登录</span>
                 </button>
@@ -23,6 +24,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
     name:"login",
     data() {
@@ -31,6 +33,9 @@ export default {
             password: ""
         };
     },
+    methods: {
+        ...mapActions("user",["handleLogin"])
+    }
 }
 </script>
 

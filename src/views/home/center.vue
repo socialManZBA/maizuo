@@ -3,7 +3,8 @@
         <div class="avatar" v-if="userInfo">
             <div class="avator-icon">
                 <img :src="userInfo.avatar" />
-                <input type="file" @change="handleUpdAvatar" />
+                <!-- <input type="file" @change="handleUpdAvatar" /> -->
+                <input type="file"/>
             </div>
             <div class="nick-name">{{ userInfo.nickname }}</div>
         </div>
@@ -14,6 +15,11 @@
             </div>
             <router-link to="/login" tag="div" class="nick-name">立即登录</router-link>
         </div>
+        <!-- <div class="avatar">
+            <img :src="userInfo.avatar"  class="avator-icon" />
+            <div class="nick-name" v-if="userInfo && userInfo.nickname">{{userInfo.nickname}}</div>
+            <router-link to="/login" tag="div" class="nick-name" v-else>立即登录</router-link>
+        </div> -->
 
         <ul class="my-order-tab">
             <li>
@@ -32,15 +38,20 @@
         <div class="margin-set my-balance">
             <span class="label">余额</span>
         </div>
-        <div class="margin-set system-set" @click="handleLogout">
+        <!-- <div class="margin-set system-set" @click="handleLogout"> -->
+        <div class="margin-set system-set">
             <span class="label">退出登录</span>
         </div>
     </div>
 </template>
 
 <script>
+import {mapState} from "vuex";
 export default {
-    name: "center"
+    name: "center",
+    computed: {
+      ...mapState("user",["userInfo"])
+    }
 }
 </script>
 

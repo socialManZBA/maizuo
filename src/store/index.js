@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import film from "./modules/film";
 import city from "./modules/city";
+import user from "./modules/user";
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     film,
-    city
+    city,
+    user
   }
 });
