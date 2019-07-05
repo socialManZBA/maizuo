@@ -1,11 +1,11 @@
 <template>
-  <div class="page-film">
-    <h1>我是影片</h1>
+  <div class="page-card">
+    <h1>卖座卡页面</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: "film"
+  name: "card"
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="mz-filmlist">
     <ul>
       <li class="item" v-for="item in list" :key="item.filmId">
-        <router-link :to='"/film:" + item.filmId'>
+        <router-link :to="'/film:' + item.filmId">
           <div class="img">
             <img :src="item.poster" alt />
           </div>
@@ -11,18 +11,30 @@
               <span class="name">{{ item.name }}</span>
               <span class="item">{{ item.filmType.name }}</span>
             </div>
-            <div v-show="filmType === 'nowPlaying'" class="film-grade info-col" style="visibility: visible;">
+            <div
+              v-show="filmType === 'nowPlaying'"
+              class="film-grade info-col"
+              style="visibility: visible;"
+            >
               <span class="label">观众评分</span>
-              <span class="grade">{{item.grade}}</span>
+              <span class="grade">{{ item.grade }}</span>
             </div>
             <div class="film-actors info-col">
-              <span class="label">主演：{{item.actors | actorFormat}}</span>
+              <span class="label">主演：{{ item.actors | actorFormat }}</span>
             </div>
-            <div v-show="filmType === 'nowPlaying'" class="film-detail info-col">
-              <span class="label">{{item.nation}} | {{item.runtime}}分钟</span>
+            <div
+              v-show="filmType === 'nowPlaying'"
+              class="film-detail info-col"
+            >
+              <span class="label"
+                >{{ item.nation }} | {{ item.runtime }}分钟</span
+              >
             </div>
-            <div v-show="filmType === 'comingSoon'" class="film-actors info-col">
-              <span class="label">上映日期: {{item.premiereAt}}</span>
+            <div
+              v-show="filmType === 'comingSoon'"
+              class="film-actors info-col"
+            >
+              <span class="label">上映日期: {{ item.premiereAt }}</span>
             </div>
           </div>
           <div class="buy" v-show="filmType === 'nowPlaying'">购票</div>
@@ -30,7 +42,6 @@
         </router-link>
       </li>
     </ul>
-    
   </div>
 </template>
 
@@ -38,30 +49,28 @@
 export default {
   name: "FilmList",
   props: {
-    list: { 
+    list: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     },
     filmType: String
   },
-  methods: {
-   
-  },
+  methods: {},
   filters: {
-     actorFormat(actors = []) {  // es6写法
+    actorFormat(actors = []) {
+      // es6写法
       // let actors = actors || [];  // es5的写法
       // let tmp = actors.map(item => item.name);
       let tmp = actors.map(function(item) {
-        return item.name
+        return item.name;
       });
-       return tmp.length ? tmp.join(" ") : "暂无主演";
+      return tmp.length ? tmp.join(" ") : "暂无主演";
     }
   }
-}
+};
 </script>
-
 
 <style lang="scss">
 @import "~@/assets/style/common/mixins.scss";

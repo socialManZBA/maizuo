@@ -1,71 +1,95 @@
 <template>
-    <div class="page-city">
-<!-- 搜索框 -->
-        <van-search
-            v-model="searchVal"
-            placeholder="请输入搜索关键词"
-            background= "#f4f4f4"
-            show-action
-        />
-<!-- 城市内容 -->
-        <div class="lv-indexlist" v-show="!searchVal">
-            <ul class="lv-indexlist__content" ref="lv-indexlist__content">
-                <div class="recommend-city">
-                    <div class="gprs-city">
-                        <div class="city-index-title">GPS定位你所在城市</div>
-                        <ul class="city-index-detail">
-                        <li class="city-item-detail city-item-detail-gprs">
-                            <div class="city-item-text">定位失败</div>
-                        </li>
-                        </ul>
-                    </div>
-                    <div class="hot-city">
-                        <div class="city-index-title">热门城市</div>
-                        <ul class="city-index-detail">
-                            <li class="city-item-detail" v-for="item in hotCity" :key="item.cityId" @click="handleChgCity(item)">
-                                <div class="city-item-text">{{item.name}}</div>
-                            </li>
-                            <!-- <li class="city-item-detail">
+  <div class="page-city">
+    <!-- 搜索框 -->
+    <van-search
+      v-model="searchVal"
+      placeholder="请输入搜索关键词"
+      background="#f4f4f4"
+      show-action
+    />
+    <!-- 城市内容 -->
+    <div class="lv-indexlist" v-show="!searchVal">
+      <ul class="lv-indexlist__content" ref="lv-indexlist__content">
+        <div class="recommend-city">
+          <div class="gprs-city">
+            <div class="city-index-title">GPS定位你所在城市</div>
+            <ul class="city-index-detail">
+              <li class="city-item-detail city-item-detail-gprs">
+                <div class="city-item-text">定位失败</div>
+              </li>
+            </ul>
+          </div>
+          <div class="hot-city">
+            <div class="city-index-title">热门城市</div>
+            <ul class="city-index-detail">
+              <li
+                class="city-item-detail"
+                v-for="item in hotCity"
+                :key="item.cityId"
+                @click="handleChgCity(item)"
+              >
+                <div class="city-item-text">{{ item.name }}</div>
+              </li>
+              <!-- <li class="city-item-detail">
                                 <div class="city-item-text">天津</div>
                             </li> -->
-                        </ul>
-                    </div>
-                </div>
-                <li :ref="'box_' + item.py" class="lv-indexsection" v-for="item in cityList" :key="item.py">
-                    <p class="lv-indexsection__index">{{item.py}}</p>
-                    <ul>
-                        <li v-for="city in item.list" :key="city.cityId" @click="handleChgCity(city)">{{city.name}}</li>
-                    </ul>
-                </li>
             </ul>
-            <div class="lv-indexlist__nav">
-                <ul>
-                    <li v-for="item in indexlist" :key="item" @click="goTop(item)">{{item}}</li>
-                </ul>
-            </div>
+          </div>
         </div>
-        <!-- 搜索内容 -->
-        <div class="lv-indexlist" v-show="searchVal">
-            <!-- 当有城市信息的时候显示,与下是互斥 -->
-            <ul class="search_box" v-show="searchList.length">
-                <li v-for="item in searchList" :key="item.cityId" @click="handleChgCity(item)">{{item.name}}</li>
-            </ul>
-            <!-- 当没有城市数据的时候显示没有的信息,与上市互斥关系 -->
-            <div class="empty-result" v-show="!searchList.length">
-                <img src="../../assets/images/img.png" alt="">
-                <p>没有找到匹配的城市</p>
-            </div>
-        </div>
+        <li
+          :ref="'box_' + item.py"
+          class="lv-indexsection"
+          v-for="item in cityList"
+          :key="item.py"
+        >
+          <p class="lv-indexsection__index">{{ item.py }}</p>
+          <ul>
+            <li
+              v-for="city in item.list"
+              :key="city.cityId"
+              @click="handleChgCity(city)"
+            >
+              {{ city.name }}
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div class="lv-indexlist__nav">
+        <ul>
+          <li v-for="item in indexlist" :key="item" @click="goTop(item)">
+            {{ item }}
+          </li>
+        </ul>
+      </div>
     </div>
+    <!-- 搜索内容 -->
+    <div class="lv-indexlist" v-show="searchVal">
+      <!-- 当有城市信息的时候显示,与下是互斥 -->
+      <ul class="search_box" v-show="searchList.length">
+        <li
+          v-for="item in searchList"
+          :key="item.cityId"
+          @click="handleChgCity(item)"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
+      <!-- 当没有城市数据的时候显示没有的信息,与上市互斥关系 -->
+      <div class="empty-result" v-show="!searchList.length">
+        <img src="../../assets/images/img.png" alt="" />
+        <p>没有找到匹配的城市</p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import {  mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "city",
   data() {
     return {
-    //   searchVal: ""
+      //   searchVal: ""
     };
   },
   methods: {
@@ -82,33 +106,33 @@ export default {
 
     // 选中城市'
     handleChgCity(city) {
-        let cityId = city.cityId;
-        this.$store.commit({
-            type: "city/setCurCityId",
-            cityId
-        })
-        // 跳转到主页,编程式导航
-        this.$router.back();
-        // 将点击的城市id存储在本地
-        window.localStorage.setItem("cityId",cityId);
+      let cityId = city.cityId;
+      this.$store.commit({
+        type: "city/setCurCityId",
+        cityId
+      });
+      // 跳转到主页,编程式导航
+      this.$router.back();
+      // 将点击的城市id存储在本地
+      window.localStorage.setItem("cityId", cityId);
     }
   },
   computed: {
-    ...mapGetters("city", ["cityList", "hotCity", "indexlist","searchList"]),
+    ...mapGetters("city", ["cityList", "hotCity", "indexlist", "searchList"]),
     searchVal: {
-        get() {
-            return this.$store.state.city.searchVal
-        },
-        set(value) {
-            this.$store.commit({
-                type: "city/setSearchVal",
-                value
-            })
-        }
+      get() {
+        return this.$store.state.city.searchVal;
+      },
+      set(value) {
+        this.$store.commit({
+          type: "city/setSearchVal",
+          value
+        });
+      }
     }
   },
   created() {
-// 城市列表不在这里请求了,因为很多地方都用到,在别的地方用回出现数据为空,所以万年老二一开始就要去加载城市的数据
+    // 城市列表不在这里请求了,因为很多地方都用到,在别的地方用回出现数据为空,所以万年老二一开始就要去加载城市的数据
     // this.getCities();
   }
 };
@@ -119,42 +143,42 @@ export default {
 @import "~@/assets/style/common/px2rem.scss";
 
 .page-city {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   .van-search__content {
     background-color: #fff;
   }
 
   .lv-indexlist {
-      .search_box {
-        padding-left: 15px;
+    .search_box {
+      padding-left: 15px;
+      width: 100%;
+      li {
+        @include border-bottom;
         width: 100%;
-        li {
-            @include border-bottom;
-            width: 100%;
-            height: px2rem(44);
-            position: relative;
-            line-height: px2rem(44);
-            color: #191a1b;
-            font-size: 13px;
-        }
+        height: px2rem(44);
+        position: relative;
+        line-height: px2rem(44);
+        color: #191a1b;
+        font-size: 13px;
       }
-    .empty-result{
-        position: absolute;
-        top: 107px;
-        width: 100%;
-        text-align: center;
-        img{
-            width: 90px;
-            margin: auto;
-        }
-        p {
-            color: #bdc0c5;
-            font-size: 14px;
-            margin: 0;
-        }
-    };
+    }
+    .empty-result {
+      position: absolute;
+      top: 107px;
+      width: 100%;
+      text-align: center;
+      img {
+        width: 90px;
+        margin: auto;
+      }
+      p {
+        color: #bdc0c5;
+        font-size: 14px;
+        margin: 0;
+      }
+    }
     width: 100%;
     height: 100%;
     flex: 1;

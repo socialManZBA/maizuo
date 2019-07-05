@@ -1,58 +1,60 @@
 <template>
-    <div class="page-home-center">
-        <div class="avatar" v-if="userInfo">
-            <div class="avator-icon">
-                <img :src="userInfo.avatar" />
-                <!-- <input type="file" @change="handleUpdAvatar" /> -->
-                <input type="file"/>
-            </div>
-            <div class="nick-name">{{ userInfo.nickname }}</div>
-        </div>
+  <div class="page-home-center">
+    <div class="avatar" v-if="userInfo">
+      <div class="avator-icon">
+        <img :src="userInfo.avatar" />
+        <!-- <input type="file" @change="handleUpdAvatar" /> -->
+        <input type="file" />
+      </div>
+      <div class="nick-name">{{ userInfo.nickname }}</div>
+    </div>
 
-        <div class="avatar" v-else>
-            <div class="avator-icon">
-                <img src="../../assets/images/avatar.png" />
-            </div>
-            <router-link to="/login" tag="div" class="nick-name">立即登录</router-link>
-        </div>
-        <!-- <div class="avatar">
+    <div class="avatar" v-else>
+      <div class="avator-icon">
+        <img src="../../assets/images/avatar.png" />
+      </div>
+      <router-link to="/login" tag="div" class="nick-name"
+        >立即登录</router-link
+      >
+    </div>
+    <!-- <div class="avatar">
             <img :src="userInfo.avatar"  class="avator-icon" />
             <div class="nick-name" v-if="userInfo && userInfo.nickname">{{userInfo.nickname}}</div>
             <router-link to="/login" tag="div" class="nick-name" v-else>立即登录</router-link>
         </div> -->
 
-        <ul class="my-order-tab">
-            <li>
-                <i class="iconfont icon-dianying1"></i>
-                <div class="common-p">电影订单</div>
-            </li>
-            <li>
-                <i class="iconfont icon-dingdan"></i>
-                <div class="common-p">拼团订单</div>
-            </li>
-        </ul>
+    <ul class="my-order-tab">
+      <li>
+        <i class="iconfont icon-dianying1"></i>
+        <div class="common-p">电影订单</div>
+      </li>
+      <li>
+        <i class="iconfont icon-dingdan"></i>
+        <div class="common-p">拼团订单</div>
+      </li>
+    </ul>
 
-        <router-link tag="div" to="/card" class="margin-set my-card">
-            <span class="label">卖座卡</span>
-        </router-link>
-        <div class="margin-set my-balance">
-            <span class="label">余额</span>
-        </div>
-        <!-- <div class="margin-set system-set" @click="handleLogout"> -->
-        <div class="margin-set system-set">
-            <span class="label">退出登录</span>
-        </div>
+    <router-link tag="div" to="/card" class="margin-set my-card">
+      <span class="label">卖座卡</span>
+    </router-link>
+    <div class="margin-set my-balance">
+      <span class="label">余额</span>
     </div>
+    <!-- <div class="margin-set system-set" @click="handleLogout"> -->
+    <div class="margin-set system-set">
+      <span class="label">退出登录</span>
+    </div>
+  </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 export default {
-    name: "center",
-    computed: {
-      ...mapState("user",["userInfo"])
-    }
-}
+  name: "center",
+  computed: {
+    ...mapState("user", ["userInfo"])
+  }
+};
 </script>
 
 <style lang="scss">
