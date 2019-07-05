@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Toast } from "vant";
-import { stat } from "fs";
 
 const state = {
   bannerList: [],

@@ -4,7 +4,7 @@
       <div class="avator-icon">
         <img :src="userInfo.avatar" />
         <!-- change事件监听input的改变 -->
-        <input type="file" @change="handleUpdAvatar" /> 
+        <input type="file" @change="handleUpdAvatar" />
         <!-- <input type="file" /> -->
       </div>
       <div class="nick-name">{{ userInfo.nickname }}</div>
@@ -41,8 +41,8 @@
     <div class="margin-set my-balance">
       <span class="label">余额</span>
     </div>
-    <!-- <div class="margin-set system-set" @click="handleLogout"> -->
-    <div class="margin-set system-set">
+    <div class="margin-set system-set" @click="handleLogout">
+      <!-- <div class="margin-set system-set"> -->
       <span class="label">退出登录</span>
     </div>
   </div>
@@ -56,8 +56,7 @@ export default {
     ...mapState("user", ["userInfo"])
   },
   methods: {
-    ...mapActions("user",["handleUpdAvatar"]),
-
+    ...mapActions("user", ["handleUpdAvatar", "handleLogout"])
   }
 };
 </script>

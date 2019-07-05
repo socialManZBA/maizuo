@@ -10,16 +10,17 @@ const state = {
 
 const getters = {};
 
+// 设置用户信息
 const mutations = {
   setUserInfo(state, payload) {
     state.userInfo = payload.info;
   },
 
   // 修改图片内容
-  setUserAvatar(state,payload) {
-    let newUserInfo = {...state.userInfo,avatar:payload.avatar} //将之前的userInfo展开,用新请求回来的数据覆盖之前的,在合并
+  setUserAvatar(state, payload) {
+    let newUserInfo = { ...state.userInfo, avatar: payload.avatar }; //将之前的userInfo展开,用新请求回来的数据覆盖之前的,在合并
     state.userInfo = newUserInfo;
-    window.localStorage.setItem("userInfo",JSON.stringify(newUserInfo));//将userInfo再次存入localStorage
+    window.localStorage.setItem("userInfo", JSON.stringify(newUserInfo)); //将userInfo再次存入localStorage
   }
 };
 
@@ -58,40 +59,51 @@ const actions = {
     });
   },
 
-    // 头像更换
-    handleUpdAvatar({commit,state},event) {
-      // console.log("图片更换");
-      // console.log(event.target.files[0]);  // 这里输出的是图片的信息对象,有大小什么的这些,要路径没用,我们存的就是这图片的信息对象
-      // 请求之前,loading...
-      Toast.loading({
-        duration: 0,
-        mask: true,
-        message: "加载中..."
-      });
-      // 因为请求的是图片不是平常的数据,所以要用formData 查看https://elvmx.gitee.io/lv-wiki/node/#%E5%89%8D%E7%AB%AF%E5%AE%9E%E7%8E%B0
-      let fromData = new FormData();
-      fromData.append("userId",state.userInfo.userId);
-      fromData.append("avatar",event.target.files[0]);
-      axios.post("http://localhost:9090/user/profile",fromData,{
+  // 退出登录,不需要发起ajax请求,只是跟着登录一起写在这里而已
+  handleLogout(context) {
+    context.commit({
+      type: "setUserInfo",
+      info: null
+    });
+    window.location.reload();
+    window.localStorage.removeItem("userInfo");
+  },
+
+  // 头像更换
+  handleUpdAvatar({ commit, state }, event) {
+    // console.log("图片更换");
+    // console.log(event.target.files[0]);  // 这里输出的是图片的信息对象,有大小什么的这些,要路径没用,我们存的就是这图片的信息对象
+    // 请求之前,loading...
+    Toast.loading({
+      duration: 0,
+      mask: true,
+      message: "加载中..."
+    });
+    // 因为请求的是图片不是平常的数据,所以要用formData 查看https://elvmx.gitee.io/lv-wiki/node/#%E5%89%8D%E7%AB%AF%E5%AE%9E%E7%8E%B0
+    let fromData = new FormData();
+    fromData.append("userId", state.userInfo.userId);
+    fromData.append("avatar", event.target.files[0]);
+    axios
+      .post("http://localhost:9090/user/profile", fromData, {
         headers: {
           "content-type": "multipart/form-data" // 将默认规定在发送表单数据之前如何对其进行编码。
         }
       })
-      .then(response =>{
+      .then(response => {
         Toast.clear();
         let res = response.data;
         if (res.code === 0) {
           Toast.success("修改成功");
-          console.log(res)
+          console.log(res);
           commit({
             type: "setUserAvatar",
             avatar: res.data
-          })
-        }else{
+          });
+        } else {
           Toast(res.msg);
         }
-      })
-    }
+      });
+  }
 };
 
 export default {
