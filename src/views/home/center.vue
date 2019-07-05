@@ -3,8 +3,9 @@
     <div class="avatar" v-if="userInfo">
       <div class="avator-icon">
         <img :src="userInfo.avatar" />
-        <!-- <input type="file" @change="handleUpdAvatar" /> -->
-        <input type="file" />
+        <!-- change事件监听input的改变 -->
+        <input type="file" @change="handleUpdAvatar" /> 
+        <!-- <input type="file" /> -->
       </div>
       <div class="nick-name">{{ userInfo.nickname }}</div>
     </div>
@@ -48,11 +49,15 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "center",
   computed: {
     ...mapState("user", ["userInfo"])
+  },
+  methods: {
+    ...mapActions("user",["handleUpdAvatar"]),
+
   }
 };
 </script>
